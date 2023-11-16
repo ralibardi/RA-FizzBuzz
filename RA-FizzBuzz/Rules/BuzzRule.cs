@@ -2,8 +2,6 @@
 
 public class BuzzRule : IFizzBuzzRule
 {
-    public string ApplyRule(int number)
-    {
-        return (number % 5 == 0) ? "Buzz" : string.Empty;
-    }
+    public bool Applies(int number) => number % 5 == 0;
+    public string Result => "Buzz";
 }

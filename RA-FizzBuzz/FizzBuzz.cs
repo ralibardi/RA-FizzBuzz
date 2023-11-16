@@ -2,27 +2,24 @@
 
 public class FizzBuzz : IFizzBuzz
 {
-    private readonly IServiceProvider _serviceProvider;
+    private readonly List<IFizzBuzzRule> rules;
 
-    public FizzBuzz(IServiceProvider serviceProvider)
+    public FizzBuzz()
     {
-        _serviceProvider = serviceProvider;
+        rules = Assembly.GetExecutingAssembly()
+            .GetTypes()
+            .Where(t => typeof(IFizzBuzzRule).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract)
+            .Select(Activator.CreateInstance)
+            .Cast<IFizzBuzzRule>()
+            .ToList();
     }
 
     public string GetOutput(int number)
     {
-        var output = string.Empty;
+        var result = rules
+            .OrderByDescending(x => x.Result)
+            .Where(rule => rule.Applies(number)).Select(rule => rule.Result);
 
-        var types = Assembly.GetExecutingAssembly().GetTypes();
-        foreach (var type in types)
-        {
-            if (type.IsClass && type.GetInterface("IFizzBuzzRule") != null)
-            {
-                var rule = _serviceProvider.GetService(type) as IFizzBuzzRule;
-                output += rule?.ApplyRule(number);
-            }
-        }
-
-        return string.IsNullOrEmpty(output) ? number.ToString() : output;
+        return result.Any() ? string.Join(string.Empty, result) : number.ToString();
     }
 }

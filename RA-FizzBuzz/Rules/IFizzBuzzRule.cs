@@ -2,5 +2,6 @@
 
 public interface IFizzBuzzRule
 {
-    string ApplyRule(int number);
+    bool Applies(int number);
+    string Result { get; }
 }

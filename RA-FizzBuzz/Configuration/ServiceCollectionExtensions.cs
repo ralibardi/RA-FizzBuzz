@@ -16,7 +16,6 @@ public static class ServiceCollectionExtensions
         // Rules
         services.AddSingleton<IFizzBuzzRule, FizzRule>();
         services.AddSingleton<IFizzBuzzRule, BuzzRule>();
-        services.AddSingleton<IFizzBuzzRule, FizzBuzzRule>();
 
         return services;
     }
