@@ -4,6 +4,6 @@ public class FizzRule : IFizzBuzzRule
 {
     public string ApplyRule(int number)
     {
-        throw new NotImplementedException();
+        return (number % 3 == 0) ? "Fizz" : string.Empty;
     }
 }
