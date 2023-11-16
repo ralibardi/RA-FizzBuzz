@@ -3,24 +3,27 @@
 [TestFixture]
 public class FizzBuzzTests
 {
-    [Test]
-    public void FizzRule_ShouldReturnFizz()
+    [TestCase(3, "Fizz")]
+    [TestCase(5, "Buzz")]
+    [TestCase(15, "FizzBuzz")]
+    public void FizzBuzz_GetOutput_ShouldReturnStringForMultiplesOf3And5(int multiplier, string result)
     {
-        var rule = new FizzRule();
-        Assert.AreEqual("Fizz", rule.ApplyRule(3));
+        // Arrange
+        var fizzBuzz = new FizzBuzz();
+
+        // Assert
+        for (int i = 0; i < 10; i++) { 
+            Assert.AreEqual(result, fizzBuzz.GetOutput(multiplier * i));
+        }
     }
 
     [Test]
-    public void FizzRule_ShouldReturnBuzz()
+    public void FizzBuzz_GetOutput_ShouldReturnNumberForNonMultiplesOf3And5()
     {
-        var rule = new BuzzRule();
-        Assert.AreEqual("Buzz", rule.ApplyRule(5));
-    }
+        // Arrange
+        var fizzBuzz = new FizzBuzz();
 
-    [Test]
-    public void FizzRule_ShouldReturnFizzBuzz()
-    {
-        var rule = new FizzBuzzRule();
-        Assert.AreEqual("FizzBuzz", rule.ApplyRule(15));
+        // Assert
+        Assert.AreEqual("7", fizzBuzz.GetOutput(7));
     }
 }
