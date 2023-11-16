@@ -2,11 +2,11 @@
 
 public class FizzBuzz : IFizzBuzz
 {
-    private readonly List<IFizzBuzzRule> rules;
+    private readonly List<IFizzBuzzRule> _rules;
 
     public FizzBuzz()
     {
-        rules = Assembly.GetExecutingAssembly()
+        _rules = Assembly.GetExecutingAssembly()
             .GetTypes()
             .Where(t => typeof(IFizzBuzzRule).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract)
             .Select(Activator.CreateInstance)
@@ -16,9 +16,11 @@ public class FizzBuzz : IFizzBuzz
 
     public string GetOutput(int number)
     {
-        var result = rules
+        var result = _rules
             .OrderByDescending(x => x.Result)
-            .Where(rule => rule.Applies(number)).Select(rule => rule.Result);
+            .Where(rule => rule.Applies(number))
+            .Select(rule => rule.Result)
+            .ToList();
 
         return result.Any() ? string.Join(string.Empty, result) : number.ToString();
     }

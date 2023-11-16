@@ -7,7 +7,7 @@ var fizzBuzz = serviceProvider.GetService<IFizzBuzz>();
 
 if (fizzBuzz != null)
 {
-    for (int i = 1; i <= 100; i++)
+    for (var i = 1; i <= 100; i++)
     {
         Console.WriteLine(fizzBuzz.GetOutput(i));
     }
